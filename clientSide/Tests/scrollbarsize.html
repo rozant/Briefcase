@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <script>
+      onload = function () {
+        var bar = document.createElement('div');
+        bar.style.overflow = "scroll";
+        document.body.appendChild(bar);
+        var width = bar.offsetWidth - bar.clientWidth;
+        var height = bar.offsetHeight - bar.clientHeight;
+        document.body.removeChild(bar);
+        alert (width + ":" + height);
+      }
+    </script>
+  </head>
+  <body>
+  </body>
+</html>
