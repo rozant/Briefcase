@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+  
+    <title>Briefcase - Big Editor</title>
+    <!-- External Libraries -->
+    <script type="text/javascript" src="{{STATIC_URL}}components/jquery-1.6.1.min.js"></script>
+    <!--LOCAL--><script type="text/javascript" src="../components/jquery-1.6.1.min.js"></script><!--LOCAL-->
+    
+    <script type="text/javascript" src="{{STATIC_URL}}components/menu/menu.js"></script>
+    <!--LOCAL--><script type="text/javascript" src="../components/menu/menu.js"></script><!--LOCAL-->
+    
+    <!-- EXTERNAL CSS ATTEMPT -->
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}components/menu/menuStyle.css" />
+    <!--LOCAL--><link rel="stylesheet" type="text/css" href="../components/menu/menuStyle.css" /><!--LOCAL-->
+  
+    <!-- INCLUDED SCRIPTS FOR THE PUBLISHED FILES -->
+    <!-- THESE MAY BE INCLUDED IN THE RAW HTML IN THE FUTURE TO REDUCE SERVER REQUESTS -->
+    <script type="text/javascript" src="minibigstring.js"></script>
+    <script type="text/javascript" src="minishowdownstring.js"></script>
+    <script type="text/javascript" src="cssstring.js"></script>
+    
+    <script type="text/javascript" src="script/htmlBuilder.js"></script>
+    <script type="text/javascript">
+      UTF8 = {
+	      encode: function(s){
+		      for(var c, i = -1, l = (s = s.split("")).length, o = String.fromCharCode; ++i < l;
+			      s[i] = (c = s[i].charCodeAt(0)) >= 127 ? o(0xc0 | (c >>> 6)) + o(0x80 | (c & 0x3f)) : s[i]
+		      );
+		      return s.join("");
+	      },
+	      decode: function(s){
+		      for(var a, b, i = -1, l = (s = s.split("")).length, o = String.fromCharCode, c = "charCodeAt"; ++i < l;
+			      ((a = s[i][c](0)) & 0x80) &&
+			      (s[i] = (a & 0xfc) == 0xc0 && ((b = s[i + 1][c](0)) & 0xc0) == 0x80 ?
+			      o(((a & 0x03) << 6) + (b & 0x3f)) : o(128), s[++i] = "")
+		      );
+		      return s.join("");
+	      }
+      };
+      
+      
+      
+      function preview() {
+        //window.open("data:text/text;charset=utf-8,"+getHTML(),'_blank');
+        var htmlout = document.getElementById('htmlout');
+        htmlout.value = getHTML();
+      }
+      function offlineDownload () {
+        window.location = "data:text/html;charset=utf-8;filename=tada.txt,"+UTF8.encode(getHTML());
+      }
+      function onlineDownload () {
+        alert("Error: this function is not written yet");
+        alert(document.getElementById('internalScript').innerHTML);
+      }
+      
+    </script>
+  </head>
+  <body>
+    <!-- Menu Begin -->
+    <div class="TitleMenu" id="TitleMenu"></div>
+    
+    <textarea id="markdown" style="width:48%; height:700px; float:left"></textarea>
+    <textarea id="htmlout" style="width:48%; height: 700px; float:right"></textarea>
+    <br />
+    <!--<a href="#" onclick="preview()">PREVIEW</a>
+    <a href="data:text/txt;charset=utf-8;headers=Content-Disposition%3A%20attachment%3B%20filename%3D%22with%20spaces.txt%22%0D%0AContent-Language%3A%20en;base64,4oiaDQo%3D">OFFLINE DOWNLOAD</a>
+    <a href="#" onclick="alert('error preparing download')">ONLINE DOWNLOAD</a>-->
+    
+    
+    
+    
+    
+    
+    <xml id="xmlMenu" style="display: none">
+      <XMLMenu>
+        <menu name="File" iconsrc="icons/action_forward.gif" version="normal">
+          <menuitem name="New"  function="alert('ptbhtbt nope')"  iconsrc="icons/action_save.gif" shortcut="Ctrl+N" version="normal"> </menuItem>
+          <menuitem name="Open..."  function="load()"  iconsrc="icons/flag_white.gif" shortcut="Ctrl+O" version="normal"> </menuItem>
+          <break></break>
+          <menuitem name="Save"  function="save()"  iconsrc="icons/flag_white.gif" shortcut="Ctrl+S" version="normal"> </menuItem>
+          <menuitem name="Save As..."  function="save()"  iconsrc="icons/flag_white.gif" shortcut="Ctrl+Shift+S" version="normal"> </menuItem>
+          <menuitem name="Revert"  function="alert('revert')"  iconsrc="icons/flag_white.gif" shortcut="Ctrl+O" version="normal"> </menuItem>
+          <break></break>
+          <menuitem name="Print Preview"  function="alert('print priview')"  iconsrc="icons/flag_white.gif" shortcut="Ctrl+Shift+P" version="normal"> </menuItem>
+          <menuitem name="Print..."  function="alert('print')"  iconsrc="icons/flag_white.gif" shortcut="Ctrl+P" version="normal"> </menuItem>
+          <break></break>
+          <break></break>
+          <menuitem name="Close"  function="alert('close')"  iconsrc="icons/flag_white.gif" shortcut="Ctrl+W" version="normal"> </menuItem>
+          <menuitem name="Quit"  function="alert('quit')"  iconsrc="icons/flag_white.gif" shortcut="Ctrl+Q" version="normal"> </menuItem>
+        </menu>
+        <menu name="Edit" iconsrc="icons/action_forward.gif" version="normal">
+          <menuitem name="Undo"  function="alert('undo')"  iconsrc="icons/flag_white.gif" shortcut="Ctrl+Z" version="normal"> </menuItem>
+          <menuitem name="Redo"  function="alert('redo')"  iconsrc="icons/flag_white.gif" shortcut="Ctrl+Shift+Z" version="normal"> </menuItem>
+          <break></break>
+          <menuitem name="Cut"  function="alert('Cut')"  iconsrc="icons/flag_white.gif" shortcut="Ctrl+X" version="normal"> </menuItem>
+          <menuitem name="Copy"  function="alert('copy')"  iconsrc="icons/flag_white.gif" shortcut="Ctrl+C" version="normal"> </menuItem>
+          <menuitem name="Paste"  function="alert('paste')"  iconsrc="icons/flag_white.gif" shortcut="Ctrl+V" version="normal"> </menuItem>
+          <menuitem name="Delete"  function="alert('delete')"  iconsrc="icons/flag_white.gif" shortcut="" version="normal"> </menuItem>
+          <break></break>
+          <menuitem name="Select All"  function="alert('select all')"  iconsrc="icons/flag_white.gif" shortcut="Ctrl+A" version="normal"> </menuItem>
+          <break></break>
+          <menuitem name="Insert Date and Time"  function="alert('insert date and time')"  iconsrc="icons/flag_white.gif" shortcut="" version="normal"> </menuItem>
+          <break></break>
+          <menuitem name="Preferences"  function="alert('preferences')"  iconsrc="icons/flag_white.gif" shortcut="" version="normal"> </menuItem>
+        </menu>
+        <menu name="Publisher" iconsrc="page.gif" version="normal">
+          <menuitem name="Download From Server" function="onlineDownload()"  iconsrc="icons/flag_white.gif" shortcut="" version="normal"></menuItem>
+          <menuitem name="Offline Download"     function="offlineDownload()" iconsrc="icons/flag_white.gif" shortcut="" version="normal"></menuItem>
+          <menuitem name="Preview"              function="preview()"         iconsrc="icons/flag_white.gif" shortcut="" version="normal"></menuItem>
+        </menu>
+      </XMLMenu>
+    </xml>
+  </body>
+</html>
